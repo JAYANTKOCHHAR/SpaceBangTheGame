@@ -1,0 +1,131 @@
+MOV1DOWN	MACRO
+CMP SHIP1POS,159-shipwidth
+JAE CANTMOVE1
+
+CALL CLEARSHIP1
+MOV CX,SHIP1SPEED
+ADD SHIP1POS,CX
+CALL DRAWSHIP1
+
+CANTMOVE1:
+ENDM MOV1DOWN	
+
+MOV1UP	MACRO
+CMP SHIP1POS,PLAYTOP
+JBE CANTMOVE2
+
+CALL CLEARSHIP1
+MOV CX,SHIP1SPEED
+SUB SHIP1POS,CX
+CALL DRAWSHIP1
+
+CANTMOVE2:
+ENDM MOV1UP	
+
+MOV2DOWN	MACRO
+
+CMP SHIP2POS,159-shipwidth
+JAE CANTMOVE3
+
+CALL CLEARSHIP2
+MOV CX,SHIP2SPEED
+ADD SHIP2POS,CX
+CALL DRAWSHIP2
+CANTMOVE3:
+ENDM MOV2DOWN	
+
+MOV2UP	MACRO
+
+CMP SHIP2POS,PLAYTOP
+JBE CANTMOVE4
+
+CALL CLEARSHIP2
+MOV CX,SHIP2SPEED
+SUB SHIP2POS,CX
+CALL DRAWSHIP2
+
+CANTMOVE4:
+
+ENDM MOV2UP	
+
+
+BLINKER1 MACRO
+    
+MOV AX,CLAYMORE1X
+MOV BL,7
+DIV BL
+CMP AH,0
+JNZ NOBLINK1
+XOR CLAYMORE1L,1
+NOBLINK1:     
+    
+ENDM BLINKER1
+
+BLINKER2 MACRO
+
+MOV AX,CLAYMORE2X
+MOV BL,7
+DIV BL
+CMP AH,0
+JNZ NOBLINK2
+XOR CLAYMORE2L,1
+NOBLINK2:
+    
+ENDM BLINKER2 
+
+
+CLAYMOREINDICATOR1ON MACRO
+    mov bh,0
+    mov ah,2
+    mov dh,1                              ;change cursor for player 2 draw health 
+    mov dl,15
+    int 10h       
+       
+    MOV AH,2
+    MOV DL,175
+    INT 21H   
+ENDM CLAYMOREINDICATOR1ON
+
+CLAYMOREINDICATOR2ON MACRO
+    mov bh,0
+    mov ah,2
+    mov dh,1                              ;change cursor for player 2 draw health 
+    mov dl,25
+    int 10h       
+       
+    MOV AH,2
+    MOV DL,174
+    INT 21H
+    
+    
+ENDM CLAYMOREINDICATOR2ON
+
+
+CLAYMOREINDICATOR1OFF MACRO
+    
+    mov bh,0
+    mov ah,2
+    mov dh,1                              ;change cursor for player 2 draw health 
+    mov dl,15
+    int 10h       
+       
+    MOV AH,2
+    MOV DL,0
+    INT 21H
+    
+ENDM CLAYMOREINDICATOR1OFF
+
+
+CLAYMOREINDICATOR2OFF MACRO
+    
+    mov bh,0
+    mov ah,2
+    mov dh,1                              ;change cursor for player 2 draw health 
+    mov dl,25
+    int 10h       
+       
+    MOV AH,2
+    MOV DL,0
+    INT 21H
+    
+ENDM CLAYMOREINDICATOR2OFF
